@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_blog/src/features/blog/data/fake_blog_repository.dart';
-import 'package:flutter_blog/src/features/blog/presentation/widgets/blog_list.dart';
-import 'package:flutter_blog/src/features/blog/presentation/widgets/category_section.dart';
+import 'package:flutter_blog/src/features/blog/data/repository/article_repository.dart';
+import 'package:flutter_blog/src/features/blog/presentation/widgets/article_sources_list.dart';
+import 'package:flutter_blog/src/features/blog/presentation/widgets/articles_list.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -9,22 +9,14 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final blogLists = ref.watch(blogsListProvider);
+    final articlesList = ref.watch(articlesListProvider);
 
     return Scaffold(
       body: SafeArea(
-        child: blogLists.when(
+        child: articlesList.when(
           data: (data) => Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [SizedBox(height: 60, child: CategorySection())],
-                ),
-                BlogsList(),
-              ],
-            ),
+            child: Column(children: [ArticleSourcesList(), ArticlesList()]),
           ),
           error: (error, st) => Center(child: Text(error.toString())),
           loading: () => Center(child: CircularProgressIndicator()),

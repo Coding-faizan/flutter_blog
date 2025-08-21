@@ -1,0 +1,81 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:6177356929457975049",
+      "lastPropertyId": "10:5483076642094186828",
+      "name": "ArticleEntity",
+      "properties": [
+        {
+          "id": "1:8054026832853137321",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2089430366455036154",
+          "name": "author",
+          "type": 9
+        },
+        {
+          "id": "3:7415943699945723268",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "4:2258688279939994440",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "5:8820561906452653421",
+          "name": "url",
+          "type": 9
+        },
+        {
+          "id": "6:7343345981176798120",
+          "name": "urlToImage",
+          "type": 9
+        },
+        {
+          "id": "7:3226775935008999573",
+          "name": "publishedAt",
+          "type": 9
+        },
+        {
+          "id": "8:635004619506358691",
+          "name": "content",
+          "type": 9
+        },
+        {
+          "id": "10:5483076642094186828",
+          "name": "source",
+          "type": 9
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "2:273740008228373071",
+  "lastIndexId": "1:4052274468232260939",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [
+    273740008228373071
+  ],
+  "retiredIndexUids": [
+    4052274468232260939
+  ],
+  "retiredPropertyUids": [
+    3593680680649626775,
+    8848491596338528772,
+    5765684945153155568,
+    5295763711705031737
+  ],
+  "retiredRelationUids": [],
+  "version": 1
+}
