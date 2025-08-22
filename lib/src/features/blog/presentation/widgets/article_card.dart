@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blog/src/constants/app_sizes.dart';
 import 'package:flutter_blog/src/extensions.dart';
-import 'package:flutter_blog/src/features/blog/data/repository/article_repository.dart';
 import 'package:flutter_blog/src/features/blog/domain/article.dart';
 import 'package:flutter_blog/src/features/blog/presentation/controller/favourite_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -49,12 +48,21 @@ class ArticleCard extends ConsumerWidget {
                           article.publishedAt.toFormattedDate(),
                           style: Theme.of(context).textTheme.labelMedium,
                         ),
-                        IconButton(
-                          icon: Icon(Icons.favorite),
-                          color: article.isFav ? Colors.red : null,
-                          onPressed: () => ref
-                              .read(favouriteControllerProvider.notifier)
-                              .toggleFav(article.id),
+                        Row(
+                          children: [
+                            if (article.isWatched) Icon(Icons.history),
+                            IconButton(
+                              icon: Icon(Icons.favorite),
+                              color: article.isFav
+                                  ? Theme.of(
+                                      context,
+                                    ).colorScheme.primaryFixedDim
+                                  : null,
+                              onPressed: () => ref
+                                  .read(favouriteControllerProvider.notifier)
+                                  .toggleFav(article.id),
+                            ),
+                          ],
                         ),
                       ],
                     ),

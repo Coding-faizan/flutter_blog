@@ -45,6 +45,14 @@ class ArticleRepository {
       await _localDataSource.putArticle(article);
     }
   }
+
+  Future<void> markWatched(int articleId) async {
+    var article = await _localDataSource.getArticle(articleId);
+    if (article != null) {
+      article.isWatched = !article.isWatched;
+      await _localDataSource.putArticle(article);
+    }
+  }
 }
 
 final articleRepositoryProvider = Provider((ref) {
@@ -81,8 +89,28 @@ final filteredArticlesProvider = Provider((ref) {
   return filteredArticles.isEmpty ? articles : filteredArticles;
 });
 
-final articleProvider = Provider.autoDispose.family((ref, id) {
+final articleProvider = Provider.autoDispose.family<Article, int>((ref, id) {
+  final articleRepository = ref.watch(articleRepositoryProvider);
   final articles = ref.watch(articlesListProvider).asData?.value ?? [];
   final article = articles.firstWhere((a) => a.id == id);
+  ref.onDispose(() {
+    if (!article.isWatched) {
+      articleRepository.markWatched(id);
+      ref.invalidate(articlesListProvider);
+    }
+  });
+
   return article;
+});
+
+final favArticlesProvider = Provider((ref) {
+  final articles = ref.watch(articlesListProvider).asData?.value ?? [];
+  final favArticles = articles.where((a) => a.isFav).toList();
+  return favArticles;
+});
+
+final watchedArticlesProvider = Provider.autoDispose((ref) {
+  final articles = ref.watch(articlesListProvider).asData?.value ?? [];
+  final watchedArticles = articles.where((a) => a.isWatched).toList();
+  return watchedArticles;
 });

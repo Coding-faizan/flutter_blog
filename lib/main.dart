@@ -26,6 +26,15 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(routerConfig: AppRouter.router);
+    return MaterialApp.router(
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.tealAccent, // try teal, deepPurple, or orange too
+          brightness: Brightness.light,
+        ),
+        useMaterial3: true,
+      ),
+      routerConfig: AppRouter.router,
+    );
   }
 }
