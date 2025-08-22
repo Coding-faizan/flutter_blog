@@ -8,16 +8,25 @@ class LocalDataSource {
 
   LocalDataSource({required this.objectBox});
 
-  void saveArticles(List<Article> articles) {
+  Future<void> saveArticles(List<Article> articles) async {
     final articleEntities = articles.map((a) => a.toArticleEntity()).toList();
     objectBox.putArticles(articleEntities);
   }
 
-  List<Article> getArticles() {
-    final articleEntities = objectBox.getAllArticles();
+  Future<List<Article>> getArticles() async {
+    final articleEntities = await objectBox.getAllArticles();
 
     final articles = articleEntities.map((a) => a.toArticle()).toList();
     return articles;
+  }
+
+  Future<Article?> getArticle(int id) async {
+    final article = await objectBox.getArticle(id);
+    return article?.toArticle();
+  }
+
+  Future<int> putArticle(Article article) async {
+    return objectBox.putArticle(article.toArticleEntity());
   }
 
   void clearArticles() {

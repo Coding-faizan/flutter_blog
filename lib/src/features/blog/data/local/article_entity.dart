@@ -13,6 +13,8 @@ class ArticleEntity {
   String urlToImage;
   String publishedAt;
   String content;
+  bool isFav;
+  bool isWatched;
 
   ArticleEntity({
     this.id = 0,
@@ -24,6 +26,8 @@ class ArticleEntity {
     required this.urlToImage,
     required this.publishedAt,
     required this.content,
+    required this.isFav,
+    required this.isWatched,
   });
 }
 
@@ -39,6 +43,8 @@ extension ArticleEntityX on ArticleEntity {
       urlToImage: urlToImage,
       publishedAt: DateTime.parse(publishedAt),
       content: content,
+      isFav: isFav,
+      isWatched: isWatched,
     );
   }
 }

@@ -18,16 +18,24 @@ class ObjectBox {
     return ObjectBox._create(store);
   }
 
-  List<int> putArticles(List<ArticleEntity> articles) {
-    return articleBox.putMany(articles);
+  Future<List<int>> putArticles(List<ArticleEntity> articles) async {
+    return articleBox.putManyAsync(articles);
   }
 
-  List<ArticleEntity> getAllArticles() {
-    return articleBox.getAll();
+  Future<List<ArticleEntity>> getAllArticles() async {
+    return articleBox.getAllAsync();
   }
 
-  void clearArticles() {
-    articleBox.removeAll();
+  Future<ArticleEntity?> getArticle(int id) async {
+    return await articleBox.getAsync(id);
+  }
+
+  Future<int> putArticle(ArticleEntity articleEntity) async {
+    return articleBox.putAsync(articleEntity);
+  }
+
+  Future<void> clearArticles() async {
+    articleBox.removeAllAsync();
   }
 
   void close() {

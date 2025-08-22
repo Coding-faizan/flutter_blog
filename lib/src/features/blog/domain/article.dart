@@ -10,6 +10,8 @@ class Article {
   final String urlToImage;
   final DateTime publishedAt;
   final String content;
+  bool isFav;
+  bool isWatched;
 
   Article({
     required this.id,
@@ -21,12 +23,15 @@ class Article {
     required this.urlToImage,
     required this.publishedAt,
     required this.content,
+    required this.isFav,
+    required this.isWatched,
   });
 }
 
 extension ArticleX on Article {
   ArticleEntity toArticleEntity() {
     return ArticleEntity(
+      id: id,
       source: source,
       author: author,
       title: title,
@@ -35,6 +40,8 @@ extension ArticleX on Article {
       urlToImage: urlToImage,
       publishedAt: publishedAt.toIso8601String(),
       content: content,
+      isFav: isFav,
+      isWatched: isWatched,
     );
   }
 }

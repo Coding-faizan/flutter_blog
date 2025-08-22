@@ -22,7 +22,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(1, 6177356929457975049),
     name: 'ArticleEntity',
-    lastPropertyId: const obx_int.IdUid(10, 5483076642094186828),
+    lastPropertyId: const obx_int.IdUid(12, 9220521203805174285),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -77,6 +77,18 @@ final _entities = <obx_int.ModelEntity>[
         id: const obx_int.IdUid(10, 5483076642094186828),
         name: 'source',
         type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(11, 6362227417809720720),
+        name: 'isFav',
+        type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(12, 9220521203805174285),
+        name: 'isWatched',
+        type: 1,
         flags: 0,
       ),
     ],
@@ -161,7 +173,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final publishedAtOffset = fbb.writeString(object.publishedAt);
         final contentOffset = fbb.writeString(object.content);
         final sourceOffset = fbb.writeString(object.source);
-        fbb.startTable(11);
+        fbb.startTable(13);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, authorOffset);
         fbb.addOffset(2, titleOffset);
@@ -171,6 +183,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
         fbb.addOffset(6, publishedAtOffset);
         fbb.addOffset(7, contentOffset);
         fbb.addOffset(9, sourceOffset);
+        fbb.addBool(10, object.isFav);
+        fbb.addBool(11, object.isWatched);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -207,6 +221,18 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final contentParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 18, '');
+        final isFavParam = const fb.BoolReader().vTableGet(
+          buffer,
+          rootOffset,
+          24,
+          false,
+        );
+        final isWatchedParam = const fb.BoolReader().vTableGet(
+          buffer,
+          rootOffset,
+          26,
+          false,
+        );
         final object = ArticleEntity(
           id: idParam,
           source: sourceParam,
@@ -217,6 +243,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
           urlToImage: urlToImageParam,
           publishedAt: publishedAtParam,
           content: contentParam,
+          isFav: isFavParam,
+          isWatched: isWatchedParam,
         );
 
         return object;
@@ -272,5 +300,15 @@ class ArticleEntity_ {
   /// See [ArticleEntity.source].
   static final source = obx.QueryStringProperty<ArticleEntity>(
     _entities[0].properties[8],
+  );
+
+  /// See [ArticleEntity.isFav].
+  static final isFav = obx.QueryBooleanProperty<ArticleEntity>(
+    _entities[0].properties[9],
+  );
+
+  /// See [ArticleEntity.isWatched].
+  static final isWatched = obx.QueryBooleanProperty<ArticleEntity>(
+    _entities[0].properties[10],
   );
 }

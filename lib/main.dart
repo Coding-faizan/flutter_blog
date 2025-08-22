@@ -8,6 +8,7 @@ main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final objectBox = await ObjectBox.initObx();
+  //objectBox.clearArticles();
   runApp(
     ProviderScope(
       overrides: [

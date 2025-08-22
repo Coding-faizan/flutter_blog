@@ -18,7 +18,7 @@ class ArticleRepository {
        _localDataSource = localDataSource;
 
   Future<List<Article>> getArticles() async {
-    final localArticles = _localDataSource.getArticles();
+    final localArticles = await _localDataSource.getArticles();
 
     if (localArticles.isNotEmpty) {
       return localArticles;
@@ -34,8 +34,16 @@ class ArticleRepository {
     final articles = articleDtos.map((dto) => dto.toArticle()).toList();
 
     //saving locally
-    _localDataSource.saveArticles(articles);
+    await _localDataSource.saveArticles(articles);
     return _localDataSource.getArticles();
+  }
+
+  Future<void> toggleFav(int articleId) async {
+    var article = await _localDataSource.getArticle(articleId);
+    if (article != null) {
+      article.isFav = !article.isFav;
+      await _localDataSource.putArticle(article);
+    }
   }
 }
 
@@ -63,7 +71,7 @@ final articlesSourcesProvider = Provider((ref) {
 });
 
 final filteredArticlesProvider = Provider((ref) {
-  final articles = ref.read(articlesListProvider).asData?.value ?? [];
+  final articles = ref.watch(articlesListProvider).asData?.value ?? [];
   final selectedSources = ref.watch(sourcesControllerProvider);
 
   final filteredArticles = articles
@@ -74,7 +82,7 @@ final filteredArticlesProvider = Provider((ref) {
 });
 
 final articleProvider = Provider.autoDispose.family((ref, id) {
-  final articles = ref.read(articlesListProvider).asData?.value ?? [];
+  final articles = ref.watch(articlesListProvider).asData?.value ?? [];
   final article = articles.firstWhere((a) => a.id == id);
   return article;
 });

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blog/src/constants/app_sizes.dart';
 import 'package:flutter_blog/src/features/blog/data/repository/article_repository.dart';
-import 'package:flutter_blog/src/features/blog/data/repository/fake_blog_repository.dart';
+import 'package:flutter_blog/src/features/blog/presentation/controller/favourite_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class BlogDetailScreen extends ConsumerWidget {
-  const BlogDetailScreen({required this.blogId, super.key});
+class ArticleDetailScreen extends ConsumerWidget {
+  const ArticleDetailScreen({required this.blogId, super.key});
   final String blogId;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -38,12 +38,24 @@ class BlogDetailScreen extends ConsumerWidget {
                     ),
                     gapH8,
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CircleAvatar(child: Icon(Icons.person)),
-                        gapW8,
-                        Text(
-                          article.author ?? 'Anonymous',
-                          style: Theme.of(context).textTheme.labelLarge,
+                        Row(
+                          children: [
+                            CircleAvatar(child: Icon(Icons.person)),
+                            gapW8,
+                            Text(
+                              article.author ?? 'Anonymous',
+                              style: Theme.of(context).textTheme.labelLarge,
+                            ),
+                          ],
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.favorite),
+                          color: article.isFav ? Colors.red : null,
+                          onPressed: () => ref
+                              .read(favouriteControllerProvider.notifier)
+                              .toggleFav(article.id),
                         ),
                       ],
                     ),

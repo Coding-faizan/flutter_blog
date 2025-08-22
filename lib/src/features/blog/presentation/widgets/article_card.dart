@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blog/src/constants/app_sizes.dart';
 import 'package:flutter_blog/src/extensions.dart';
+import 'package:flutter_blog/src/features/blog/data/repository/article_repository.dart';
 import 'package:flutter_blog/src/features/blog/domain/article.dart';
+import 'package:flutter_blog/src/features/blog/presentation/controller/favourite_controller.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class ArticleCard extends StatelessWidget {
+class ArticleCard extends ConsumerWidget {
   const ArticleCard({super.key, required this.article});
   final Article article;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: () => context.push('/${article.id}'),
       child: Card(
@@ -39,9 +42,21 @@ class ArticleCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     gapH8,
-                    Text(
-                      article.publishedAt.toFormattedDate(),
-                      style: Theme.of(context).textTheme.labelMedium,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          article.publishedAt.toFormattedDate(),
+                          style: Theme.of(context).textTheme.labelMedium,
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.favorite),
+                          color: article.isFav ? Colors.red : null,
+                          onPressed: () => ref
+                              .read(favouriteControllerProvider.notifier)
+                              .toggleFav(article.id),
+                        ),
+                      ],
                     ),
                   ],
                 ),
