@@ -5,10 +5,10 @@ import 'package:flutter_blog/src/constants/app_sizes.dart';
 import 'package:flutter_blog/src/features/blog/data/repository/article_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AsyncErrorWidget extends ConsumerWidget {
+class CustomErrorWidget extends ConsumerWidget {
   final Object error;
 
-  const AsyncErrorWidget({super.key, required this.error});
+  const CustomErrorWidget({super.key, required this.error});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
