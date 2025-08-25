@@ -40,7 +40,6 @@ class ArticleDto {
 extension ArticleDtoX on ArticleDto {
   Article toArticle() {
     return Article(
-      id: 0,
       source: source,
       author: author,
       title: title,

@@ -1,36 +1,43 @@
+import 'package:flutter_blog/objectbox.g.dart';
 import 'package:flutter_blog/src/features/blog/data/local/article_entity.dart';
-import 'package:flutter_blog/src/features/blog/data/local/object_box.dart';
-import 'package:flutter_blog/src/features/blog/domain/article.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LocalDataSource {
-  final ObjectBox objectBox;
+  final Box<ArticleEntity> _articleBox;
 
-  LocalDataSource({required this.objectBox});
+  LocalDataSource(Store store) : _articleBox = store.box();
 
-  Future<void> saveArticles(List<Article> articles) async {
-    final articleEntities = articles.map((a) => a.toArticleEntity()).toList();
-    objectBox.putArticles(articleEntities);
+  Future<void> saveArticles(List<ArticleEntity> articles) async {
+    await _articleBox.putManyAsync(articles);
   }
 
-  Future<List<Article>> getArticles() async {
-    final articleEntities = await objectBox.getAllArticles();
-
-    final articles = articleEntities.map((a) => a.toArticle()).toList();
-    return articles;
+  Future<List<ArticleEntity>> getArticles() async {
+    return await _articleBox.getAllAsync();
   }
 
-  Future<Article?> getArticle(int id) async {
-    final article = await objectBox.getArticle(id);
-    return article?.toArticle();
+  Future<ArticleEntity?> getArticle(int id) async {
+    final article = await _articleBox.getAsync(id);
+    return article;
   }
 
-  Future<int> putArticle(Article article) async {
-    return objectBox.putArticle(article.toArticleEntity());
+  Future<void> putArticle(ArticleEntity article) async {
+    _articleBox.putAsync(article);
   }
 
-  void clearArticles() {
-    objectBox.clearArticles();
+  Future<void> removeArticles() async {
+    _articleBox.removeAllAsync();
+  }
+
+  Future<void> toogleFav(int id) async {
+    final article = await getArticle(id);
+    article?.isFav = !article.isFav;
+    await putArticle(article!);
+  }
+
+  Future<void> markWatched(int id) async {
+    final article = await getArticle(id);
+    article?.isWatched = !article.isWatched;
+    putArticle(article!);
   }
 }
 

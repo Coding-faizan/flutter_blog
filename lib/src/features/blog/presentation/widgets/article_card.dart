@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blog/src/constants/app_sizes.dart';
-import 'package:flutter_blog/src/extensions.dart';
+import 'package:flutter_blog/src/core/extensions.dart';
 import 'package:flutter_blog/src/features/blog/domain/article.dart';
 import 'package:flutter_blog/src/features/blog/presentation/controller/favourite_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,6 +11,8 @@ class ArticleCard extends ConsumerWidget {
   final Article article;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final scheme = Theme.of(context).colorScheme;
+
     return GestureDetector(
       onTap: () => context.push('/${article.id}'),
       child: Card(
@@ -27,6 +29,9 @@ class ArticleCard extends ConsumerWidget {
                     width: 180,
                     height: 120,
                     fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Text('Failed to fetch Image');
+                    },
                   ),
                 ),
               gapW8,
@@ -41,26 +46,39 @@ class ArticleCard extends ConsumerWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     gapH8,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+
                       children: [
                         Text(
                           article.publishedAt.toFormattedDate(),
                           style: Theme.of(context).textTheme.labelMedium,
                         ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             if (article.isWatched) Icon(Icons.history),
-                            IconButton(
-                              icon: Icon(Icons.favorite),
-                              color: article.isFav
-                                  ? Theme.of(
-                                      context,
-                                    ).colorScheme.primaryFixedDim
-                                  : null,
-                              onPressed: () => ref
-                                  .read(favouriteControllerProvider.notifier)
-                                  .toggleFav(article.id),
+                            SizedBox(
+                              width: 30,
+                              child: IconButton(
+                                padding: EdgeInsets.all(0),
+                                icon: Icon(Icons.favorite),
+                                color: article.isFav ? scheme.primary : null,
+                                onPressed: () async {
+                                  await ref
+                                      .read(
+                                        favouriteControllerProvider.notifier,
+                                      )
+                                      .toggleFav(article.id);
+                                  if (context.mounted) {
+                                    context.showSnackBar(
+                                      article.isFav
+                                          ? 'Removed from favourites'
+                                          : 'Added to favourites',
+                                    );
+                                  }
+                                },
+                              ),
                             ),
                           ],
                         ),
@@ -76,29 +94,3 @@ class ArticleCard extends ConsumerWidget {
     );
   }
 }
-
-// Card(
-//       color: Colors.white,
-//       child: Padding(
-//         padding: const EdgeInsets.all(8.0),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.stretch,
-//           children: [
-//             if (article.urlToImage.isNotEmpty)
-//               ClipRRect(
-//                 borderRadius: BorderRadius.circular(8),
-//                 child: Image.network(
-//                   article.urlToImage,
-//                   fit: BoxFit.cover,
-//                   height: 200,
-//                 ),
-//               ),
-//             gapH8,
-//             Text(
-//               article.title,
-//               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );

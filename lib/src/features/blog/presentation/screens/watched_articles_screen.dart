@@ -8,12 +8,11 @@ class WatchedArticlesScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final favArticles = ref.watch(watchedArticlesProvider);
-    final favArticlesLength = favArticles.length;
+    final watchedArticles = ref.watch(watchedArticlesProvider);
+
     return ArticlesList(
-      articles: favArticles,
+      articles: watchedArticles,
       fallbackText: 'No Watched Articles',
-      length: favArticlesLength,
     );
   }
 }

@@ -14,7 +14,7 @@ class Article {
   bool isWatched;
 
   Article({
-    required this.id,
+    this.id = 0,
     required this.source,
     this.author,
     required this.title,

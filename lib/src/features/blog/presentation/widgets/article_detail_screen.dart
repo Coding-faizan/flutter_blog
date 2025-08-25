@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blog/src/constants/app_sizes.dart';
+import 'package:flutter_blog/src/core/extensions.dart';
 import 'package:flutter_blog/src/features/blog/data/repository/article_repository.dart';
 import 'package:flutter_blog/src/features/blog/presentation/controller/favourite_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,10 +19,18 @@ class ArticleDetailScreen extends ConsumerWidget {
           child: Column(
             children: [
               if (article.urlToImage.isNotEmpty)
-                Image.network(
-                  article.urlToImage,
-                  height: 600,
-                  fit: BoxFit.cover,
+                AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: Image.network(
+                    article.urlToImage,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text('Failed to fetch Image'),
+                      );
+                    },
+                  ),
                 ),
               gapH12,
               Padding(
@@ -52,10 +61,21 @@ class ArticleDetailScreen extends ConsumerWidget {
                         ),
                         IconButton(
                           icon: Icon(Icons.favorite),
-                          color: article.isFav ? Colors.red : null,
-                          onPressed: () => ref
-                              .read(favouriteControllerProvider.notifier)
-                              .toggleFav(article.id),
+                          color: article.isFav
+                              ? Theme.of(context).colorScheme.primary
+                              : null,
+                          onPressed: () async {
+                            await ref
+                                .read(favouriteControllerProvider.notifier)
+                                .toggleFav(article.id);
+                            if (context.mounted) {
+                              context.showSnackBar(
+                                article.isFav
+                                    ? 'Removed from favourites'
+                                    : 'Added to favourites',
+                              );
+                            }
+                          },
                         ),
                       ],
                     ),

@@ -10,10 +10,15 @@ class FavouritesScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final favArticles = ref.watch(favArticlesProvider);
     final favArticlesLength = favArticles.length;
-    return ArticlesList(
-      articles: favArticles,
-      fallbackText: 'No Favourite Articles',
-      length: favArticlesLength,
+    return Expanded(
+      child: AnimatedSwitcher(
+        duration: Duration(milliseconds: 500),
+        child: ArticlesList(
+          key: ValueKey(favArticlesLength),
+          articles: favArticles,
+          fallbackText: 'No Favourite Articles',
+        ),
+      ),
     );
   }
 }
