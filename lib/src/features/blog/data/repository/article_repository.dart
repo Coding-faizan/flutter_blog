@@ -4,6 +4,7 @@ import 'package:flutter_blog/src/features/blog/data/remote/article_dto.dart';
 import 'package:flutter_blog/src/features/blog/data/remote/remote_data_source.dart';
 import 'package:flutter_blog/src/features/blog/data/local/local_data_source.dart';
 import 'package:flutter_blog/src/features/blog/domain/article.dart';
+import 'package:flutter_blog/src/features/blog/presentation/controller/searchsearch_state_provider.dart';
 import 'package:flutter_blog/src/features/blog/presentation/controller/sources_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -78,7 +79,7 @@ final articlesSourcesProvider = Provider((ref) {
   return sources;
 });
 
-final filteredArticlesProvider = Provider.autoDispose((ref) {
+final articlesFilteredBySourcesProvider = Provider.autoDispose((ref) {
   final articles = ref.watch(articlesListProvider).asData?.value ?? [];
   final selectedSources = ref.watch(sourcesControllerProvider);
   final filteredArticles = articles
@@ -86,6 +87,24 @@ final filteredArticlesProvider = Provider.autoDispose((ref) {
       .toList();
 
   return filteredArticles.isEmpty ? articles : filteredArticles;
+});
+
+final articlesFilteredBySearchProvider = Provider.autoDispose((ref) {
+  final articlesFilteredBySources = ref.watch(
+    articlesFilteredBySourcesProvider,
+  );
+  final searchQuery = ref.watch(articlesSearchTextProvider).toLowerCase();
+
+  final articlesFilteredBySearch = articlesFilteredBySources
+      .where(
+        (a) =>
+            a.title.toLowerCase().contains(searchQuery) ||
+            a.description.toLowerCase().contains(searchQuery) ||
+            a.source.toLowerCase().contains(searchQuery),
+      )
+      .toList();
+
+  return articlesFilteredBySearch;
 });
 
 final articleProvider = Provider.autoDispose.family<Article, int>((ref, id) {
