@@ -7,8 +7,14 @@ class LocalDataSource {
 
   LocalDataSource(Store store) : _articleBox = store.box();
 
-  void saveArticles(List<ArticleEntity> articles) =>
-      _articleBox.putMany(articles);
+  void saveArticles(List<ArticleEntity> articles) {
+    for (var a in articles) {
+      if (_getArticleByTitle(a.title)?.title == a.title) {
+        continue;
+      }
+      _articleBox.put(a);
+    }
+  }
 
   List<ArticleEntity> getArticles() => _articleBox.getAll();
 
@@ -17,9 +23,23 @@ class LocalDataSource {
     return article;
   }
 
+  ArticleEntity? _getArticleByTitle(String id) {
+    final query = _articleBox.query(ArticleEntity_.title.equals(id)).build();
+    final article = query.findFirst();
+    return article;
+  }
+
   void putArticle(ArticleEntity article) => _articleBox.put(article);
 
-  void removeArticles() => _articleBox.removeAll();
+  void removeArticles() {
+    final articles = getArticles();
+    for (final a in articles) {
+      if (a.isFav || a.isWatched) {
+        continue;
+      }
+      _articleBox.remove(a.id);
+    }
+  }
 
   void toogleFav(int id) {
     final article = getArticle(id);

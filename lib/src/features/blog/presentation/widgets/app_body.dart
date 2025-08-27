@@ -14,7 +14,7 @@ class AppBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return <Widget>[
       HomeTab(),
-      Column(children: [FavouritesScreen()]),
+      FavouritesScreen(),
       WatchedArticlesScreen(),
     ][currentIndex];
   }
