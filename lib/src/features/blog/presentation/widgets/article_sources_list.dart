@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blog/src/constants/app_sizes.dart';
-import 'package:flutter_blog/src/features/blog/data/repository/article_repository.dart';
 import 'package:flutter_blog/src/features/blog/presentation/controller/sources_controller.dart';
+import 'package:flutter_blog/src/features/blog/presentation/providers/articles_list_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ArticleSourcesList extends ConsumerWidget {
