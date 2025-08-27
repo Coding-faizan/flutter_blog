@@ -64,19 +64,17 @@ class ArticleCard extends ConsumerWidget {
                                 padding: EdgeInsets.all(0),
                                 icon: Icon(Icons.favorite),
                                 color: article.isFav ? scheme.primary : null,
-                                onPressed: () async {
-                                  await ref
+                                onPressed: () {
+                                  ref
                                       .read(
                                         favouriteControllerProvider.notifier,
                                       )
                                       .toggleFav(article.id);
-                                  if (context.mounted) {
-                                    context.showSnackBar(
-                                      article.isFav
-                                          ? 'Removed from favourites'
-                                          : 'Added to favourites',
-                                    );
-                                  }
+                                  context.showSnackBar(
+                                    article.isFav
+                                        ? 'Removed from favourites'
+                                        : 'Added to favourites',
+                                  );
                                 },
                               ),
                             ),

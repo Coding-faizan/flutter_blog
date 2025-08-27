@@ -7,35 +7,28 @@ class LocalDataSource {
 
   LocalDataSource(Store store) : _articleBox = store.box();
 
-  Future<void> saveArticles(List<ArticleEntity> articles) async {
-    await _articleBox.putManyAsync(articles);
-  }
+  void saveArticles(List<ArticleEntity> articles) =>
+      _articleBox.putMany(articles);
 
-  Future<List<ArticleEntity>> getArticles() async {
-    return await _articleBox.getAllAsync();
-  }
+  List<ArticleEntity> getArticles() => _articleBox.getAll();
 
-  Future<ArticleEntity?> getArticle(int id) async {
-    final article = await _articleBox.getAsync(id);
+  ArticleEntity? getArticle(int id) {
+    final article = _articleBox.get(id);
     return article;
   }
 
-  Future<void> putArticle(ArticleEntity article) async {
-    _articleBox.putAsync(article);
-  }
+  void putArticle(ArticleEntity article) => _articleBox.put(article);
 
-  Future<void> removeArticles() async {
-    _articleBox.removeAllAsync();
-  }
+  void removeArticles() => _articleBox.removeAll();
 
-  Future<void> toogleFav(int id) async {
-    final article = await getArticle(id);
+  void toogleFav(int id) {
+    final article = getArticle(id);
     article?.isFav = !article.isFav;
-    await putArticle(article!);
+    putArticle(article!);
   }
 
-  Future<void> markWatched(int id) async {
-    final article = await getArticle(id);
+  void markWatched(int id) {
+    final article = getArticle(id);
     article?.isWatched = !article.isWatched;
     putArticle(article!);
   }

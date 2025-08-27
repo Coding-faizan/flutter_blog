@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blog/src/constants/app_sizes.dart';
 import 'package:flutter_blog/src/core/extensions.dart';
-import 'package:flutter_blog/src/features/blog/data/repository/article_repository.dart';
 import 'package:flutter_blog/src/features/blog/presentation/controller/favourite_controller.dart';
+import 'package:flutter_blog/src/features/blog/presentation/providers/articles_list_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ArticleDetailScreen extends ConsumerWidget {
@@ -64,17 +64,15 @@ class ArticleDetailScreen extends ConsumerWidget {
                           color: article.isFav
                               ? Theme.of(context).colorScheme.primary
                               : null,
-                          onPressed: () async {
-                            await ref
+                          onPressed: () {
+                            ref
                                 .read(favouriteControllerProvider.notifier)
                                 .toggleFav(article.id);
-                            if (context.mounted) {
-                              context.showSnackBar(
-                                article.isFav
-                                    ? 'Removed from favourites'
-                                    : 'Added to favourites',
-                              );
-                            }
+                            context.showSnackBar(
+                              article.isFav
+                                  ? 'Removed from favourites'
+                                  : 'Added to favourites',
+                            );
                           },
                         ),
                       ],
