@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blog/src/features/blog/data/repository/article_repository.dart';
 import 'package:flutter_blog/src/features/blog/presentation/screens/home_screen.dart';
-import 'package:flutter_blog/src/features/blog/presentation/widgets/custom_error_widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomeTab extends ConsumerStatefulWidget {
@@ -52,7 +51,18 @@ class _HomeTabState extends ConsumerState<HomeTab> {
 
     return articlesList.when(
       data: (data) => HomeScreen(),
-      error: (error, st) => CustomErrorWidget(error: error),
+      error: (error, st) => Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ElevatedButton(
+              onPressed: () => ref.invalidate(articlesListProvider),
+              child: Text('Retry'),
+            ),
+            Text(error.toString()),
+          ],
+        ),
+      ),
       loading: () => Center(child: CircularProgressIndicator()),
     );
   }
