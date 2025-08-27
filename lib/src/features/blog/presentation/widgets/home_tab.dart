@@ -34,13 +34,15 @@ class _HomeTabState extends ConsumerState<HomeTab> {
         reverseDuration: Duration(milliseconds: 500),
       ),
       builder: (_) => SizedBox(
-        height: 200,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Text(
-            "🎉 Welcome to the News App!",
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
+        height: 300,
+        width: double.infinity,
+        child: Column(
+          children: [
+            Text(
+              "Welcome to the News App!",
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+          ],
         ),
       ),
     );
