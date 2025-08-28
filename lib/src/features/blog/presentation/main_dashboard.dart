@@ -13,9 +13,12 @@ class MainDashboard extends StatefulWidget {
 class _MainDashboardState extends State<MainDashboard> {
   int currentIndex = 0;
 
+  final tabs = const [HomeTab(), FavouritesScreen(), WatchedArticlesScreen()];
+
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    print('main dashboard build');
 
     return Scaffold(
       appBar: AppBar(
@@ -42,11 +45,7 @@ class _MainDashboardState extends State<MainDashboard> {
         backgroundColor: scheme.surface,
         indicatorColor: scheme.primaryContainer,
       ),
-      body: <Widget>[
-        HomeTab(),
-        FavouritesScreen(),
-        WatchedArticlesScreen(),
-      ][currentIndex],
+      body: tabs[currentIndex],
     );
   }
 }
