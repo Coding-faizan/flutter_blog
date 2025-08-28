@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_blog/src/features/blog/presentation/widgets/app_body.dart';
+import 'package:flutter_blog/src/features/blog/presentation/screens/favourites_screen.dart';
+import 'package:flutter_blog/src/features/blog/presentation/screens/watched_articles_screen.dart';
+import 'package:flutter_blog/src/features/blog/presentation/widgets/home_tab.dart';
 
-class AppScaffold extends StatefulWidget {
-  const AppScaffold({super.key});
+class MainDashboard extends StatefulWidget {
+  const MainDashboard({super.key});
 
   @override
-  State<AppScaffold> createState() => _AppScaffoldState();
+  State<MainDashboard> createState() => _MainDashboardState();
 }
 
-class _AppScaffoldState extends State<AppScaffold> {
+class _MainDashboardState extends State<MainDashboard> {
   int currentIndex = 0;
 
   @override
@@ -40,7 +42,11 @@ class _AppScaffoldState extends State<AppScaffold> {
         backgroundColor: scheme.surface,
         indicatorColor: scheme.primaryContainer,
       ),
-      body: AppBody(currentIndex: currentIndex),
+      body: <Widget>[
+        HomeTab(),
+        FavouritesScreen(),
+        WatchedArticlesScreen(),
+      ][currentIndex],
     );
   }
 }
