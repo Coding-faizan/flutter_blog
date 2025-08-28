@@ -7,6 +7,7 @@ class ArticleEntity {
 
   String source;
   String? author;
+  @Index()
   String title;
   String description;
   String url;
