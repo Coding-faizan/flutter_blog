@@ -40,18 +40,16 @@ final articlesFilteredBySearchProvider = Provider.autoDispose((ref) {
   return articlesFilteredBySearch;
 });
 
-final articleProvider = Provider.autoDispose.family<Article, int>((ref, id) {
-  final articles = ref.watch(articleListControllerProvider).asData?.value ?? [];
-  final article = articles.firstWhere((a) => a.id == id);
-  // Docs says it leads to unexpected behaviour. what to do instead
+final articleProvider = Provider.autoDispose.family<void, Article>((
+  ref,
+  article,
+) {
   ref.onDispose(() {
     if (!article.isWatched) {
-      ref.read(articleRepositoryProvider).markWatched(id);
-      ref.invalidate(articleListControllerProvider);
+      ref.read(articleRepositoryProvider).markWatched(article.id);
+      ref.refresh(articleListControllerProvider);
     }
   });
-
-  return article;
 });
 
 final favArticlesProvider = Provider.autoDispose((ref) {

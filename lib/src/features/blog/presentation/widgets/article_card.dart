@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_blog/src/constants/app_routes.dart';
 import 'package:flutter_blog/src/constants/app_sizes.dart';
 import 'package:flutter_blog/src/core/extensions.dart';
 import 'package:flutter_blog/src/features/blog/domain/article.dart';
@@ -14,7 +15,7 @@ class ArticleCard extends ConsumerWidget {
     final scheme = Theme.of(context).colorScheme;
 
     return GestureDetector(
-      onTap: () => context.push('/${article.id}'),
+      onTap: () => context.push(AppRoutes.articleDetailScreen, extra: article),
       child: Card(
         color: Colors.white70,
         child: Padding(
