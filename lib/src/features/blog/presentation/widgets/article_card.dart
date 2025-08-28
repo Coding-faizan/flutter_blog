@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_blog/src/constants/app_routes.dart';
 import 'package:flutter_blog/src/constants/app_sizes.dart';
 import 'package:flutter_blog/src/core/extensions.dart';
 import 'package:flutter_blog/src/features/blog/domain/article.dart';
@@ -14,7 +15,7 @@ class ArticleCard extends ConsumerWidget {
     final scheme = Theme.of(context).colorScheme;
 
     return GestureDetector(
-      onTap: () => context.push('/${article.id}'),
+      onTap: () => context.push(AppRoutes.articleDetailScreen, extra: article),
       child: Card(
         color: Colors.white70,
         child: Padding(
@@ -51,7 +52,7 @@ class ArticleCard extends ConsumerWidget {
 
                       children: [
                         Text(
-                          article.publishedAt.toFormattedDate(),
+                          DateTime.parse(article.publishedAt).toFormattedDate(),
                           style: Theme.of(context).textTheme.labelMedium,
                         ),
                         Row(
@@ -64,19 +65,17 @@ class ArticleCard extends ConsumerWidget {
                                 padding: EdgeInsets.all(0),
                                 icon: Icon(Icons.favorite),
                                 color: article.isFav ? scheme.primary : null,
-                                onPressed: () async {
-                                  await ref
+                                onPressed: () {
+                                  ref
                                       .read(
                                         favouriteControllerProvider.notifier,
                                       )
                                       .toggleFav(article.id);
-                                  if (context.mounted) {
-                                    context.showSnackBar(
-                                      article.isFav
-                                          ? 'Removed from favourites'
-                                          : 'Added to favourites',
-                                    );
-                                  }
+                                  context.showSnackBar(
+                                    article.isFav
+                                        ? 'Removed from favourites'
+                                        : 'Added to favourites',
+                                  );
                                 },
                               ),
                             ),

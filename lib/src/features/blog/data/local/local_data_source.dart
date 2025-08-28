@@ -1,41 +1,66 @@
 import 'package:flutter_blog/objectbox.g.dart';
-import 'package:flutter_blog/src/features/blog/data/local/article_entity.dart';
+import 'package:flutter_blog/src/features/blog/domain/article.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LocalDataSource {
-  final Box<ArticleEntity> _articleBox;
+  final Box<Article> _articleBox;
 
   LocalDataSource(Store store) : _articleBox = store.box();
 
-  Future<void> saveArticles(List<ArticleEntity> articles) async {
-    await _articleBox.putManyAsync(articles);
+  void saveArticles(List<Article> articles) {
+    // If the article is in cache but not in API
+    final articlesFromLocal = _articleBox.getAll();
+    final articleTitles = articles.map((a) => a.title);
+    for (final article in articlesFromLocal) {
+      if (!articleTitles.contains(article.title)) {
+        _articleBox.remove(article.id);
+      }
+    }
+
+    // If article is in cache then skip else write
+    for (var a in articles) {
+      final articleGotByTitle = _getArticleByTitle(a.title);
+
+      if (articleGotByTitle?.title == a.title) {
+        continue;
+      }
+      _articleBox.put(a);
+    }
   }
 
-  Future<List<ArticleEntity>> getArticles() async {
-    return await _articleBox.getAllAsync();
-  }
+  List<Article> getArticles() => _articleBox.getAll();
 
-  Future<ArticleEntity?> getArticle(int id) async {
-    final article = await _articleBox.getAsync(id);
+  Article? getArticle(int id) {
+    final article = _articleBox.get(id);
     return article;
   }
 
-  Future<void> putArticle(ArticleEntity article) async {
-    _articleBox.putAsync(article);
+  Article? _getArticleByTitle(String id) {
+    final query = _articleBox.query(Article_.title.equals(id)).build();
+    final article = query.findFirst();
+    return article;
   }
 
-  Future<void> removeArticles() async {
-    _articleBox.removeAllAsync();
+  void putArticle(Article article) => _articleBox.put(article);
+
+  void removeArticles() {
+    final articles = getArticles();
+    for (final a in articles) {
+      if (a.isFav || a.isWatched) {
+        continue;
+      }
+      _articleBox.remove(a.id);
+    }
   }
 
-  Future<void> toogleFav(int id) async {
-    final article = await getArticle(id);
+  void toogleFav(int id) {
+    final article = getArticle(id);
     article?.isFav = !article.isFav;
-    await putArticle(article!);
+    putArticle(article!);
   }
 
-  Future<void> markWatched(int id) async {
-    final article = await getArticle(id);
+  void markWatched(int id) {
+    final article = getArticle(id);
     article?.isWatched = !article.isWatched;
     putArticle(article!);
   }

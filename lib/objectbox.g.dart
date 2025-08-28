@@ -14,79 +14,80 @@ import 'package:objectbox/internal.dart'
 import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
-import 'src/features/blog/data/local/article_entity.dart';
+import 'src/features/blog/domain/article.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
 final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
-    id: const obx_int.IdUid(1, 6177356929457975049),
-    name: 'ArticleEntity',
-    lastPropertyId: const obx_int.IdUid(12, 9220521203805174285),
+    id: const obx_int.IdUid(3, 4685705640495052625),
+    name: 'Article',
+    lastPropertyId: const obx_int.IdUid(11, 196702213317824225),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(1, 8054026832853137321),
+        id: const obx_int.IdUid(1, 84026108823710033),
         name: 'id',
         type: 6,
         flags: 1,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(2, 2089430366455036154),
-        name: 'author',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(3, 7415943699945723268),
-        name: 'title',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(4, 2258688279939994440),
-        name: 'description',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(5, 8820561906452653421),
-        name: 'url',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(6, 7343345981176798120),
-        name: 'urlToImage',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(7, 3226775935008999573),
-        name: 'publishedAt',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(8, 635004619506358691),
-        name: 'content',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(10, 5483076642094186828),
+        id: const obx_int.IdUid(2, 4358247631533045714),
         name: 'source',
         type: 9,
         flags: 0,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(11, 6362227417809720720),
+        id: const obx_int.IdUid(3, 3454795686946410299),
+        name: 'author',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 8202945796114721522),
+        name: 'title',
+        type: 9,
+        flags: 2048,
+        indexId: const obx_int.IdUid(3, 7273283903994723421),
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 8876295706742256299),
+        name: 'description',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 9117687022054988401),
+        name: 'url',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(7, 5043725771126732004),
+        name: 'urlToImage',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(8, 680997765479841857),
+        name: 'publishedAt',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(9, 3690034340144564380),
+        name: 'content',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(10, 4589093780261033555),
         name: 'isFav',
         type: 1,
         flags: 0,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(12, 9220521203805174285),
+        id: const obx_int.IdUid(11, 196702213317824225),
         name: 'isWatched',
         type: 1,
         flags: 0,
@@ -135,17 +136,28 @@ Future<obx.Store> openStore({
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
     entities: _entities,
-    lastEntityId: const obx_int.IdUid(2, 273740008228373071),
-    lastIndexId: const obx_int.IdUid(1, 4052274468232260939),
+    lastEntityId: const obx_int.IdUid(3, 4685705640495052625),
+    lastIndexId: const obx_int.IdUid(3, 7273283903994723421),
     lastRelationId: const obx_int.IdUid(0, 0),
     lastSequenceId: const obx_int.IdUid(0, 0),
-    retiredEntityUids: const [273740008228373071],
+    retiredEntityUids: const [273740008228373071, 6177356929457975049],
     retiredIndexUids: const [4052274468232260939],
     retiredPropertyUids: const [
       3593680680649626775,
       8848491596338528772,
       5765684945153155568,
       5295763711705031737,
+      8054026832853137321,
+      2089430366455036154,
+      7415943699945723268,
+      2258688279939994440,
+      8820561906452653421,
+      7343345981176798120,
+      3226775935008999573,
+      635004619506358691,
+      5483076642094186828,
+      6362227417809720720,
+      9220521203805174285,
     ],
     retiredRelationUids: const [],
     modelVersion: 5,
@@ -154,15 +166,16 @@ obx_int.ModelDefinition getObjectBoxModel() {
   );
 
   final bindings = <Type, obx_int.EntityDefinition>{
-    ArticleEntity: obx_int.EntityDefinition<ArticleEntity>(
+    Article: obx_int.EntityDefinition<Article>(
       model: _entities[0],
-      toOneRelations: (ArticleEntity object) => [],
-      toManyRelations: (ArticleEntity object) => {},
-      getId: (ArticleEntity object) => object.id,
-      setId: (ArticleEntity object, int id) {
+      toOneRelations: (Article object) => [],
+      toManyRelations: (Article object) => {},
+      getId: (Article object) => object.id,
+      setId: (Article object, int id) {
         object.id = id;
       },
-      objectToFB: (ArticleEntity object, fb.Builder fbb) {
+      objectToFB: (Article object, fb.Builder fbb) {
+        final sourceOffset = fbb.writeString(object.source);
         final authorOffset = object.author == null
             ? null
             : fbb.writeString(object.author!);
@@ -172,19 +185,18 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final urlToImageOffset = fbb.writeString(object.urlToImage);
         final publishedAtOffset = fbb.writeString(object.publishedAt);
         final contentOffset = fbb.writeString(object.content);
-        final sourceOffset = fbb.writeString(object.source);
-        fbb.startTable(13);
+        fbb.startTable(12);
         fbb.addInt64(0, object.id);
-        fbb.addOffset(1, authorOffset);
-        fbb.addOffset(2, titleOffset);
-        fbb.addOffset(3, descriptionOffset);
-        fbb.addOffset(4, urlOffset);
-        fbb.addOffset(5, urlToImageOffset);
-        fbb.addOffset(6, publishedAtOffset);
-        fbb.addOffset(7, contentOffset);
-        fbb.addOffset(9, sourceOffset);
-        fbb.addBool(10, object.isFav);
-        fbb.addBool(11, object.isWatched);
+        fbb.addOffset(1, sourceOffset);
+        fbb.addOffset(2, authorOffset);
+        fbb.addOffset(3, titleOffset);
+        fbb.addOffset(4, descriptionOffset);
+        fbb.addOffset(5, urlOffset);
+        fbb.addOffset(6, urlToImageOffset);
+        fbb.addOffset(7, publishedAtOffset);
+        fbb.addOffset(8, contentOffset);
+        fbb.addBool(9, object.isFav);
+        fbb.addBool(10, object.isWatched);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -199,41 +211,41 @@ obx_int.ModelDefinition getObjectBoxModel() {
         );
         final sourceParam = const fb.StringReader(
           asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 22, '');
+        ).vTableGet(buffer, rootOffset, 6, '');
         final authorParam = const fb.StringReader(
           asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 6);
+        ).vTableGetNullable(buffer, rootOffset, 8);
         final titleParam = const fb.StringReader(
           asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 8, '');
+        ).vTableGet(buffer, rootOffset, 10, '');
         final descriptionParam = const fb.StringReader(
           asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 10, '');
+        ).vTableGet(buffer, rootOffset, 12, '');
         final urlParam = const fb.StringReader(
           asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 12, '');
+        ).vTableGet(buffer, rootOffset, 14, '');
         final urlToImageParam = const fb.StringReader(
           asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 14, '');
+        ).vTableGet(buffer, rootOffset, 16, '');
         final publishedAtParam = const fb.StringReader(
           asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 16, '');
+        ).vTableGet(buffer, rootOffset, 18, '');
         final contentParam = const fb.StringReader(
           asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 18, '');
+        ).vTableGet(buffer, rootOffset, 20, '');
         final isFavParam = const fb.BoolReader().vTableGet(
           buffer,
           rootOffset,
-          24,
+          22,
           false,
         );
         final isWatchedParam = const fb.BoolReader().vTableGet(
           buffer,
           rootOffset,
-          26,
+          24,
           false,
         );
-        final object = ArticleEntity(
+        final object = Article(
           id: idParam,
           source: sourceParam,
           author: authorParam,
@@ -255,60 +267,60 @@ obx_int.ModelDefinition getObjectBoxModel() {
   return obx_int.ModelDefinition(model, bindings);
 }
 
-/// [ArticleEntity] entity fields to define ObjectBox queries.
-class ArticleEntity_ {
-  /// See [ArticleEntity.id].
-  static final id = obx.QueryIntegerProperty<ArticleEntity>(
+/// [Article] entity fields to define ObjectBox queries.
+class Article_ {
+  /// See [Article.id].
+  static final id = obx.QueryIntegerProperty<Article>(
     _entities[0].properties[0],
   );
 
-  /// See [ArticleEntity.author].
-  static final author = obx.QueryStringProperty<ArticleEntity>(
+  /// See [Article.source].
+  static final source = obx.QueryStringProperty<Article>(
     _entities[0].properties[1],
   );
 
-  /// See [ArticleEntity.title].
-  static final title = obx.QueryStringProperty<ArticleEntity>(
+  /// See [Article.author].
+  static final author = obx.QueryStringProperty<Article>(
     _entities[0].properties[2],
   );
 
-  /// See [ArticleEntity.description].
-  static final description = obx.QueryStringProperty<ArticleEntity>(
+  /// See [Article.title].
+  static final title = obx.QueryStringProperty<Article>(
     _entities[0].properties[3],
   );
 
-  /// See [ArticleEntity.url].
-  static final url = obx.QueryStringProperty<ArticleEntity>(
+  /// See [Article.description].
+  static final description = obx.QueryStringProperty<Article>(
     _entities[0].properties[4],
   );
 
-  /// See [ArticleEntity.urlToImage].
-  static final urlToImage = obx.QueryStringProperty<ArticleEntity>(
+  /// See [Article.url].
+  static final url = obx.QueryStringProperty<Article>(
     _entities[0].properties[5],
   );
 
-  /// See [ArticleEntity.publishedAt].
-  static final publishedAt = obx.QueryStringProperty<ArticleEntity>(
+  /// See [Article.urlToImage].
+  static final urlToImage = obx.QueryStringProperty<Article>(
     _entities[0].properties[6],
   );
 
-  /// See [ArticleEntity.content].
-  static final content = obx.QueryStringProperty<ArticleEntity>(
+  /// See [Article.publishedAt].
+  static final publishedAt = obx.QueryStringProperty<Article>(
     _entities[0].properties[7],
   );
 
-  /// See [ArticleEntity.source].
-  static final source = obx.QueryStringProperty<ArticleEntity>(
+  /// See [Article.content].
+  static final content = obx.QueryStringProperty<Article>(
     _entities[0].properties[8],
   );
 
-  /// See [ArticleEntity.isFav].
-  static final isFav = obx.QueryBooleanProperty<ArticleEntity>(
+  /// See [Article.isFav].
+  static final isFav = obx.QueryBooleanProperty<Article>(
     _entities[0].properties[9],
   );
 
-  /// See [ArticleEntity.isWatched].
-  static final isWatched = obx.QueryBooleanProperty<ArticleEntity>(
+  /// See [Article.isWatched].
+  static final isWatched = obx.QueryBooleanProperty<Article>(
     _entities[0].properties[10],
   );
 }

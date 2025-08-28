@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_blog/src/constants/app_sizes.dart';
-import 'package:flutter_blog/src/features/blog/data/repository/article_repository.dart';
+import 'package:flutter_blog/src/features/blog/presentation/controller/articles_list_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CustomErrorWidget extends ConsumerWidget {
@@ -23,7 +23,7 @@ class CustomErrorWidget extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           ElevatedButton(
-            onPressed: () => ref.invalidate(articlesListProvider),
+            onPressed: () => ref.invalidate(articleListControllerProvider),
             child: Text('Retry'),
           ),
           gapH12,

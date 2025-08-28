@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class RemoteDataSource {
   static const _url =
-      'https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=a211cb802e0940fba76130cd198e9c97&pageSize=40';
+      'https://newsapi.org/v2/top-headlines?language=en&apiKey=08cb42d9dbf0419d82f3e6187ae397f8';
 
   Future<String> fetchBlogs() async {
     final url = Uri.parse(_url);
