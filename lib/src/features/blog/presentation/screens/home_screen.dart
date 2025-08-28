@@ -11,12 +11,11 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final filteredArticles = ref.watch(articlesFilteredBySearchProvider);
-    print('home screen build');
     return Column(
       children: [
         ArticleSourcesList(),
         Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
           child: ArticlesSearchTextField(),
         ),
         Expanded(
