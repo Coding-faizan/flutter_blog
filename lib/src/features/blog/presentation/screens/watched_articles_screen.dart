@@ -9,6 +9,7 @@ class WatchedArticlesScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final watchedArticles = ref.watch(watchedArticlesProvider);
+    print('watch screen build');
 
     return ArticlesList(
       articles: watchedArticles,

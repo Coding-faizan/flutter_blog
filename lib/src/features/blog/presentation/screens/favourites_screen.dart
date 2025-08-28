@@ -10,6 +10,8 @@ class FavouritesScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final favArticles = ref.watch(favArticlesProvider);
     final favArticlesLength = favArticles.length;
+    print('fav screen build');
+
     return Column(
       children: [
         Expanded(
