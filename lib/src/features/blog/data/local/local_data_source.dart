@@ -8,8 +8,20 @@ class LocalDataSource {
   LocalDataSource(Store store) : _articleBox = store.box();
 
   void saveArticles(List<ArticleEntity> articles) {
+    // If the article is in cache but not in API
+    final articlesFromLocal = _articleBox.getAll();
+    final articleTitles = articles.map((a) => a.title);
+    for (final article in articlesFromLocal) {
+      if (!articleTitles.contains(article.title)) {
+        _articleBox.remove(article.id);
+      }
+    }
+
+    // If article is in cache then skip else write
     for (var a in articles) {
-      if (_getArticleByTitle(a.title)?.title == a.title) {
+      final articleGotByTitle = _getArticleByTitle(a.title);
+
+      if (articleGotByTitle?.title == a.title) {
         continue;
       }
       _articleBox.put(a);
