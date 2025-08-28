@@ -1,22 +1,25 @@
-import 'package:flutter_blog/src/features/blog/data/local/article_entity.dart';
+import 'package:objectbox/objectbox.dart';
 
+@Entity()
 class Article {
-  final int id;
-  final String source;
-  final String? author;
-  final String title;
-  final String description;
-  final String url;
-  final String urlToImage;
-  final DateTime publishedAt;
-  final String content;
+  int id;
+
+  String source;
+  String? author;
+  @Index()
+  String title;
+  String description;
+  String url;
+  String urlToImage;
+  String publishedAt;
+  String content;
   bool isFav;
   bool isWatched;
 
   Article({
     this.id = 0,
     required this.source,
-    this.author,
+    required this.author,
     required this.title,
     required this.description,
     required this.url,
@@ -26,22 +29,4 @@ class Article {
     required this.isFav,
     required this.isWatched,
   });
-}
-
-extension ArticleX on Article {
-  ArticleEntity toArticleEntity() {
-    return ArticleEntity(
-      id: id,
-      source: source,
-      author: author,
-      title: title,
-      description: description,
-      url: url,
-      urlToImage: urlToImage,
-      publishedAt: publishedAt.toIso8601String(),
-      content: content,
-      isFav: isFav,
-      isWatched: isWatched,
-    );
-  }
 }

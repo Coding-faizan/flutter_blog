@@ -51,7 +51,7 @@ class ArticleCard extends ConsumerWidget {
 
                       children: [
                         Text(
-                          article.publishedAt.toFormattedDate(),
+                          DateTime.parse(article.publishedAt).toFormattedDate(),
                           style: Theme.of(context).textTheme.labelMedium,
                         ),
                         Row(

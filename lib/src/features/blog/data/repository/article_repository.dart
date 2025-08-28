@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter_blog/src/features/blog/data/local/article_entity.dart';
 import 'package:flutter_blog/src/features/blog/data/remote/article_dto.dart';
 import 'package:flutter_blog/src/features/blog/data/remote/remote_data_source.dart';
 import 'package:flutter_blog/src/features/blog/data/local/local_data_source.dart';
@@ -19,7 +18,7 @@ class ArticleRepository {
   Future<List<Article>> getArticles({bool isPullToRefresh = false}) async {
     var localArticles = _localDataSource.getArticles();
     if (localArticles.isNotEmpty && !isPullToRefresh) {
-      return localArticles.map((e) => e.toArticle()).toList();
+      return localArticles;
     }
 
     _localDataSource.removeArticles();
@@ -33,13 +32,9 @@ class ArticleRepository {
     //Dto -> Domain
     var articles = articleDtos.map((dto) => dto.toArticle()).toList();
 
-    //Domain -> Entity
-    final articleEntities = articles.map((a) => a.toArticleEntity()).toList();
     //saving locally
-    _localDataSource.saveArticles(articleEntities);
-    localArticles = _localDataSource.getArticles();
-    articles = localArticles.map((e) => e.toArticle()).toList();
-    return articles;
+    _localDataSource.saveArticles(articles);
+    return _localDataSource.getArticles();
   }
 
   void toggleFav(int id) {

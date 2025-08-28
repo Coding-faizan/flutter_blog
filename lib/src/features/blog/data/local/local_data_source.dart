@@ -1,13 +1,13 @@
 import 'package:flutter_blog/objectbox.g.dart';
-import 'package:flutter_blog/src/features/blog/data/local/article_entity.dart';
+import 'package:flutter_blog/src/features/blog/domain/article.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LocalDataSource {
-  final Box<ArticleEntity> _articleBox;
+  final Box<Article> _articleBox;
 
   LocalDataSource(Store store) : _articleBox = store.box();
 
-  void saveArticles(List<ArticleEntity> articles) {
+  void saveArticles(List<Article> articles) {
     // If the article is in cache but not in API
     final articlesFromLocal = _articleBox.getAll();
     final articleTitles = articles.map((a) => a.title);
@@ -28,20 +28,20 @@ class LocalDataSource {
     }
   }
 
-  List<ArticleEntity> getArticles() => _articleBox.getAll();
+  List<Article> getArticles() => _articleBox.getAll();
 
-  ArticleEntity? getArticle(int id) {
+  Article? getArticle(int id) {
     final article = _articleBox.get(id);
     return article;
   }
 
-  ArticleEntity? _getArticleByTitle(String id) {
-    final query = _articleBox.query(ArticleEntity_.title.equals(id)).build();
+  Article? _getArticleByTitle(String id) {
+    final query = _articleBox.query(Article_.title.equals(id)).build();
     final article = query.findFirst();
     return article;
   }
 
-  void putArticle(ArticleEntity article) => _articleBox.put(article);
+  void putArticle(Article article) => _articleBox.put(article);
 
   void removeArticles() {
     final articles = getArticles();

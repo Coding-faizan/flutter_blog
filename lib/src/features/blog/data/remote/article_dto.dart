@@ -46,7 +46,7 @@ extension ArticleDtoX on ArticleDto {
       description: description,
       url: url,
       urlToImage: urlToImage,
-      publishedAt: DateTime.parse(publishedAt),
+      publishedAt: publishedAt,
       content: content,
       isFav: false,
       isWatched: false,
