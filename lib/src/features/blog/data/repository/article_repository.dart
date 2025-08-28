@@ -51,8 +51,8 @@ class ArticleRepository {
 }
 
 final articleRepositoryProvider = Provider((ref) {
-  final LocalDataSource localDataSource = ref.watch(localDataSourceProvider);
-  final RemoteDataSource remoteDataSource = ref.watch(remoteDataSourceProvider);
+  final LocalDataSource localDataSource = ref.read(localDataSourceProvider);
+  final RemoteDataSource remoteDataSource = ref.read(remoteDataSourceProvider);
   final ArticleRepository articleRepository = ArticleRepository(
     blogRemoteDataSource: remoteDataSource,
     localDataSource: localDataSource,

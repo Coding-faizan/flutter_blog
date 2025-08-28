@@ -5,7 +5,7 @@ import 'package:flutter_blog/src/features/blog/presentation/controller/sources_c
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final articlesSourcesProvider = Provider((ref) {
-  final articles = ref.read(articleListControllerProvider).valueOrNull ?? [];
+  final articles = ref.read(articleListControllerProvider).asData?.value ?? [];
 
   final sources = articles.map((a) => a.source).toSet().toList();
   return sources;
